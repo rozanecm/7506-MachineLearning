@@ -262,5 +262,5 @@ model.fit(X_train.as_matrix(), y_train, epochs=1, batch_size=200)
 
 
 # evaluate the model
-scores = model.evaluate(X_train, y_train)
-print("\n%s: %.2f%%" % (model.metrics_names[1], scores[1]*100))
+#scores = model.evaluate(X_train, y_train)
+#print("\n%s: %.2f%%" % (model.metrics_names[1], scores[1]*100))
