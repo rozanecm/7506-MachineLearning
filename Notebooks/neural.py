@@ -257,10 +257,10 @@ model.compile(optimizer='rmsprop',
                       loss='mse')
 
 # Fit the model
-model.fit(X_train.as_matrix(), y_train, epochs=1, batch_size=200)
+model.fit(X_train.as_matrix(), y_train, epochs=15, batch_size=1000)
 
 
 
 # evaluate the model
-#scores = model.evaluate(X_train, y_train)
+scores = model.evaluate(X_test, y_test)
 #print("\n%s: %.2f%%" % (model.metrics_names[1], scores[1]*100))
