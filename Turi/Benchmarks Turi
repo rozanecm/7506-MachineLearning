@@ -1,0 +1,106 @@
+
+A continuacion ALGUNAS de todas las de pruebas realizadas a lo largo del trabajo practico.
+
+
+---------------------TEST_TRAIN_SPLIT----70/30--------------------------------------------
+
+Los valores de esta columna son el MSE obtenido.
+
+
+31967190.22	(MLP)	(40,40,40,40) 		 
+33133597.10	(MLP)
+36049735.81 	(MLP)
+31703664.68	(MLP)	(100,100,100,100)       
+40249980.16	(MLP)	(500) 			 
+(100,100,100,100,100) 	MEMORY ERROR 
+822782381.0349	(KERAS NN)
+819977179	(KERAS NN)
+827116895.4489	(KERAS NN)
+830933257.6192	(KERAS NN)
+830933439.6518	(KERAS NN)
+830933334.4918	(KERAS NN)
+40064121.38 	(RF)
+
+--------> A partir de aqui generamos un nuevo dataset, luego de discretizar todas las variables
+	posibles y obtener features como los de historical y distancia.
+
+1681324.22 	(GRB) con nuevo dataset, n=100
+1740469.69 	(GRB) con nuevo dataset pero eligiendo los n mejores
+1273486.98 	(RF) con n = 10, dataset filtrado
+1811535.95 	(RF) con n = 10, pero random_state=0 (split)
+1218042.53 	(RF) con n = 10, pero random_state=2 (del RF)
+1252802.00 	(RF) con n = 10, pero random_state=9 (del RF)
+1258085.62 	(RF) con n = 10, pero random_state=9 (split)
+1124365.78 	(RF) con n = 100
+1620595.40 	(RF) con n = 100 y todos los features post filtrado
+751883.56  	(RF) con n=10, filtering de 24 hs
+255942.72  	(RF) con n=10, filtering 12 hs
+1125.36 	(RF) con n=10, FILTERING 1133 seg, se concluye que el modelo aproxima bien para 				duraciones cortas
+9726.07 	(RF) con n=100, sin feature historical 
+
+
+-------------- REALIZAMOS PRUEBAS FRENTE AL TESTINGSET ORIGINAL-----------------------------------
+
+40670467.58	(RF) n = 10, cambio de set de datos nuevamente
+40860176.88	(GRB) n=30 
+1262816.8215	(KERAS NN)
+1262817.0484	(KERAS NN)
+1262817.0127  	(KERAS NN) 
+----------------> Los vectores de prediccion de keras los obteniamos normalizados de 0 a 1, siendo estos vectores de probabilidad, el loss era menor frente a otros algoritmos aun asi nunca pudimos generar el vector de prediccion desnormalizado para realizar un subbmit en kaggle y verificar si la prediccion era buena en comparacion a otras factiblemente.
+  
+40683573.59	(LINEAR)
+40812510.46	(LINEAR) 
+40655299.89	(RF) con nuevos features para distancias largas 
+41281727.26  	(RF) n = 10, filtro 100000, cambio de scala. ( SET DE DATOS [1])	
+40551736.19 	(RF)idem anterior pero con StandarScale
+40627019.05 	(RF)idem pero con SET DE DATOS [2]
+41712229.57 	(RF)idem con set de datos [3] (version de 2 con menos features)
+41074842.66 	(RF) con n=20
+39439110.90 	(RF) con set de datos [2] y n=20
+------------MLP---------------------------------------
+40486097.35 (100) [2] 	learning_rate_init=0.01
+40527316.10 (100) [2]	learning_rate_init=0.001
+40516058.67 (100) [2]  	learning_rate_init=0.1
+
+	
+
+
+
+------------------[1]-----------------------------------------------------------------
+[(0.1783, 'id'), (0.1275, 'historical'), (0.103, 'bike_id'), (0.0963, 'start_minute'), (0.0814, 'wind_dir_degrees'), (0.0628, 'max_gust_speed_kmh'), (0.0623, 'mean_humidity'), (0.0508, 'subscription_type_Customer'), (0.0455, 'distance'), (0.0429, 'end_station_id'), (0.0407, 'start_station_id'), (0.034, 'subscription_type_Subscriber'), (0.0292, 'weekday'), (0.0111, 'precipitation_cm'), (0.0108, 'start_hour_18'), (0.0057, 'business_day'), (0.0053, 'start_dayOfWeek_id6'), (0.0049, 'start_hour_21'), (0.0045, 'start_hour_22'), (0.0023, 'start_hour_3'), (0.0007, 'Fog-Rain')]
+
+---------------------[2]----------------------------------------------------------------
+[(0.1858, 'id'), (0.1259, 'historical'), (0.1055, 'bike_id'), (0.1038, 'start_minute'), (0.0824, 'wind_dir_degrees'), (0.0654, 'mean_humidity'), (0.0627, 'max_gust_speed_kmh'), (0.0508, 'subscription_type_Customer'), (0.046, 'distance'), (0.0428, 'end_station_id'), (0.0409, 'start_station_id'), (0.034, 'subscription_type_Subscriber'), (0.0334, 'weekday'), (0.0116, 'precipitation_cm'), (0.0089, 'start_hour_18')]
+
+-------------------[3]------------------------------------------------------------------
+[['id','historical', 'subscription_type_Subscriber','subscription_type_Customer', 'distance','start_minute', 'start_station_id', 'end_station_id',  'wind_dir_degrees', 'max_gust_speed_kmh','precipitation_cm', 'mean_humidity', 'business_day','weekday','month','year']]
+
+[(0.7069, 'start_hour'), (0.0902, 'end_hour'), (0.0694, 'historical'), (0.0689, 'viajes'), (0.0461, 'bike_id'), (0.0185, 'month')]
+('Prediction:', array([  370.79,   624.73,   238.98, ...,  2961.24,   939.21,   452.49]))
+
+------------------------------------------------------------------------------------------
+
+
+[['start_dayOfWeek_id6','start_hour_22','start_hour_21','Fog-Rain','start_hour_18','start_hour_3','historical', 'subscription_type_Subscriber','subscription_type_Customer', 'distance','start_minute', 'start_station_id', 'end_station_id',  'wind_dir_degrees', 'max_gust_speed_kmh','precipitation_cm', 'mean_humidity', 'business_day','weekday']]
+-----------------------------------------------------------------------------------------------------
+[(0.5606, 'end_day_24'), (0.4287, 'end_day'), (0.0036, 'end_day_23'), (0.0005, 'historical'), (0.0004, 'bike_id'), (0.0003, 'start_day'), (0.0002, 'viajes'), (0.0002, 'subscription_type_Subscriber'), (0.0002, 'subscription_type_Customer'), (0.0002, 'start_hour_15'), (0.0002, 'start_hour_14'), (0.0002, 'start_hour_13'), (0.0002, 'end_minute'), (0.0002, 'end_hour10'), (0.0002, 'end_hour0'), (0.0002, 'end_day_7'), (0.0002, 'distance'), (0.0002, 'business_day'), (0.0001, 'start_week'), (0.0001, 'start_station_id'), (0.0001, 'start_month'), (0.0001, 'start_minute'), (0.0001, 'start_hour_9'), (0.0001, 'start_hour_18'), (0.0001, 'start_hour_11'), (0.0001, 'start_day_6'), (0.0001, 'start_day_1'), (0.0001, 'start_dayOfWeek_id1'), (0.0001, 'end_week'), (0.0001, 'end_station_id'), (0.0001, 'end_month'), (0.0001, 'end_hour9'), (0.0001, 'end_hour8'), (0.0001, 'end_hour12'), (0.0001, 'end_hour11'), (0.0001, 'end_day_6'), (0.0001, 'end_day_4'), (0.0001, 'end_dayOfWeek_id0')
+
+
+'end_day_24',  'end_day', 'end_day_23',  'historical',  'bike_id', 'start_day',  'viajes',  'subscription_type_Subscriber','subscription_type_Customer',  'start_hour_15',  'start_hour_14',  'start_hour_13',  'end_minute',  'end_hour10',  'end_hour0',  'end_day_7',  'distance,  'business_day', 'start_week',  'start_station_id',  'start_month', 'start_minute',  'start_hour_9',  'start_hour_18',  'start_hour_11',  'start_day_6',  'start_day_1',  'start_dayOfWeek_id1'  'end_week',  'end_station_id',  'end_month',  'end_hour9',  'end_hour8',  'end_hour12',  'end_hour11', 'end_day_6',  'end_day_4',  'end_dayOfWeek_id0'
+
+
+----------------------------------------------------------------------------------------------
+['start_station_id', 'end_station_id', 'bike_id', 'start_week', 'start_minute', 'start_year', 'start_month', 'start_day', 'end_week', 'end_minute', 'end_year', 'end_month', 'end_day', 'distance', 'historical', 'start_dayOfWeek_id0', 'start_dayOfWeek_id1', 'start_dayOfWeek_id2', 'start_dayOfWeek_id3', 'start_dayOfWeek_id4', 'start_dayOfWeek_id5', 'start_dayOfWeek_id6', 'end_dayOfWeek_id0', 'end_dayOfWeek_id1', 'end_dayOfWeek_id2', 'end_dayOfWeek_id3', 'end_dayOfWeek_id4', 'end_dayOfWeek_id5', 'end_dayOfWeek_id6', 'subscription_type_Customer', 'subscription_type_Subscriber', 'start_year_2013', 'start_year_2014', 'start_year_2015', 'end_year_2013', 'end_year_2014', 'end_year_2015', 'start_month_1', 'start_month_2', 'start_month_3', 'start_month_4', 'start_month_5', 'start_month_6', 'start_month_7', 'start_month_8', 'start_month_9', 'start_month_10', 'start_month_11', 'start_month_12', 'end_month_1', 'end_month_2', 'end_month_3', 'end_month_4', 'end_month_5', 'end_month_6', 'end_month_7', 'end_month_8', 'end_month_9', 'end_month_10', 'end_month_11', 'end_month_12', 'start_day_1', 'start_day_2', 'start_day_3', 'start_day_4', 'start_day_5', 'start_day_6', 'start_day_7', 'start_day_8', 'start_day_9', 'start_day_10', 'start_day_11', 'start_day_12', 'start_day_13', 'start_day_14', 'start_day_15', 'start_day_16', 'start_day_17', 'start_day_18', 'start_day_19', 'start_day_20', 'start_day_21', 'start_day_22', 'start_day_23', 'start_day_24', 'start_day_25', 'start_day_26', 'start_day_27', 'start_day_28', 'start_day_29', 'start_day_30', 'start_day_31', 'end_day_1', 'end_day_2', 'end_day_3', 'end_day_4', 'end_day_5', 'end_day_6', 'end_day_7', 'end_day_8', 'end_day_9', 'end_day_10', 'end_day_11', 'end_day_12', 'end_day_13', 'end_day_14', 'end_day_15', 'end_day_16', 'end_day_17', 'end_day_18', 'end_day_19', 'end_day_20', 'end_day_21', 'end_day_22', 'end_day_23', 'end_day_24', 'end_day_25', 'end_day_26', 'end_day_27', 'end_day_28', 'end_day_29', 'end_day_30', 'end_day_31', 'start_quarter_1', 'start_quarter_2', 'start_quarter_3', 'start_quarter_4', 'end_quarter_1', 'end_quarter_2', 'end_quarter_3', 'end_quarter_4', 'start_hour_0', 'start_hour_1', 'start_hour_2', 'start_hour_3', 'start_hour_4', 'start_hour_5', 'start_hour_6', 'start_hour_7', 'start_hour_8', 'start_hour_9', 'start_hour_10', 'start_hour_11', 'start_hour_12', 'start_hour_13', 'start_hour_14', 'start_hour_15', 'start_hour_16', 'start_hour_17', 'start_hour_18', 'start_hour_19', 'start_hour_20', 'start_hour_21', 'start_hour_22', 'start_hour_23', 'end_hour0', 'end_hour1', 'end_hour2', 'end_hour3', 'end_hour4', 'end_hour5', 'end_hour6', 'end_hour7', 'end_hour8', 'end_hour9', 'end_hour10', 'end_hour11', 'end_hour12', 'end_hour13', 'end_hour14', 'end_hour15', 'end_hour16', 'end_hour17', 'end_hour18', 'end_hour19', 'end_hour20', 'end_hour21', 'end_hour22', 'end_hour23', 'viajes', 'max_temperature_c', 'min_temperature_c', 'max_humidity', 'max_sea_level_pressure_cm', 'precipitation_cm', 'Fog', 'Normal', 'Rain', 'business_day', 'holiday']
+
+[ 'end_day', 'historical', 'bike_id', 'distance', 'start_hour_13', 'viajes', 'end_day_7', 'start_hour_14', 'start_day', 'subscription_type_Subscriber', 'end_hour0', 'end_minute', 'subscription_type_Customer', 'end_station_id', 'start_hour_15', 'start_hour_11', 'end_hour12', 'start_minute', 'start_month', 'end_month', 'end_week', 'start_day_1', 'start_station_id', 'end_hour10', 'business_day', 'end_hour8', 'start_week', 'end_hour9', 'start_dayOfWeek_id1', 'end_month_1', 'end_day_6', 'end_hour11', 'start_day_6', 'start_dayOfWeek_id2', 'start_hour_12', 'end_day_4', 'start_day_5', 'end_dayOfWeek_id2', 'start_month_3', 'end_hour15', 'start_hour_9', 'start_hour_17', 'start_hour_16', 'end_hour7', 'start_month_1', 'end_dayOfWeek_id0', 'end_hour13', 'end_hour14', 'start_hour_18']
+
+----------------------------------------------------------------------------------------------
+[(0.5262, 'distance'), (0.0889, 'historical'), (0.0361, 'end_minute'), (0.0359, 'start_minute'), (0.0255, 'end_station_id'), (0.0252, 'id'), (0.025, 'subscription_type_Subscriber'), (0.0241, 'start_station_id'), (0.0184, 'bike_id'), (0.0152, 'viajes'), (0.0133, 'subscription_type_Customer'), (0.0108, 'max_sea_level_pressure_cm'), (0.0094, 'max_temperature_c'), (0.0082, 'min_temperature_c'), (0.0077, 'max_humidity'), (0.0052, 'start_day'), (0.0051, 'end_day')
+
+[['end_minute', 'historical', 'bike_id', 'distance', 'start_minute', 'viajes', 'end_station_id', 'id', 'subscription_type_Subscriber', 'subscription_type_Subscriber','start_station_id','max_sea_level_pressure_cm','max_temperature_c','min_temperature_c']]
+
+--------------------------------------------------------------------------------------------------
+[(0.1634, 'historical'), (0.1075, 'subscription_type_Subscriber'), (0.1071, 'subscription_type_Customer'), (0.0609, 'distance'), (0.0497, 'id'), (0.0478, 'start_minute'), (0.0403, 'bike_id'), (0.0269, 'start_station_id'), (0.0255, 'end_station_id'), (0.0199, 'viajes'), (0.0182, 'wind_dir_degrees'), (0.0115, 'max_gust_speed_kmh'), (0.0113, 'min_sea_level_pressure_cm'), (0.0101, 'min_humidity'), (0.0101, 'max_sea_level_pressure_cm'), (0.0098, 'max_temperature_c'), (0.0097, 'start_week'), (0.0091, 'min_temperature_c'),
+
+[['historical', 'subscription_type_Subscriber','subscription_type_Customer', 'distance', 'id', 'bike_id' 'start_minute', 'start_station_id', 'end_station_id', 'viajes', 'wind_dir_degrees', 'max_gust_speed_kmh','min_sea_level_pressure_cm', 'min_humidity', 'max_sea_level_pressure_cm']]
+
